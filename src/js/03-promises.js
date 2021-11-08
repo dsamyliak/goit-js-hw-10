@@ -4,55 +4,66 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import 'notiflix/dist/notiflix-notify-aio-3.1.0.min.js';
 
 
-const formBlock = document.querySelector(".form");
+// const formBlock = document.querySelector(".form");
 
-formBlock.addEventListener("submit", (event) => {
+// formBlock.addEventListener("submit", (event) => {
   
-  event.preventDefault();
-  const { delay, step, amount }  = event.currentTarget;
+//   event.preventDefault();
+//   const { delay, step, amount }  = event.currentTarget;
 
-  let currentDelay = Number(delay.value);
-  const stepNumber = Number(step.value);
-  const amountP = Number(amount.value);
+//   let currentDelay = Number(delay.value);
+//   const stepNumber = Number(step.value);
+//   const amountP = Number(amount.value);
 
-  for (let position = 1; position <= amountP; position++) {
+//   for (let position = 1; position <= amountP; position++) {
     
-    createPromise(position, currentDelay);
+//     createPromise(position, currentDelay);
 
-    console.log("delayPromise", currentDelay, "position", position);
-    currentDelay += stepNumber;
+//     console.log("delayPromise", currentDelay, "position", position);
+//     currentDelay += stepNumber;
     
-  };
+//   };
 
-});
+// });
 
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  // const values = { position, delay };
+// function createPromise(position, delay) {
+//   const shouldResolve = Math.random() > 0.3;
+//   // const values = { position, delay };
 
-  const promise = new Promise((resolve, reject) => {
+//   const promise = new Promise((resolve, reject) => {
 
-    setTimeout(() => {
+//     setTimeout(() => {
 
-      if (shouldResolve) {
-        // Fulfill
-        resolve({ position, delay });
-      } else {
-        // Reject
-        reject({ position, delay });
-      };
+//       if (shouldResolve) {
+//         // Fulfill
+//         resolve({ position, delay });
+//       } else {
+//         // Reject
+//         reject({ position, delay });
+//       };
 
-    }, delay);
-  });
+//     }, delay);
+//   });
 
-  promise
-  .then(({ position, delay }) => {
-      Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
-      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+//   promise
+//   .then(({ position, delay }) => {
+//       Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+//       console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+//   })
+//   .catch(({ position, delay }) => {
+//       Notify.failure(`Rejected promise ${position} in ${delay}ms`);
+//       console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+//     });
+
+// };
+
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then(response => {
+    // Response handling
   })
-  .catch(({ position, delay }) => {
-      Notify.failure(`Rejected promise ${position} in ${delay}ms`);
-      console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-    });
-
-};
+  .then(data => {
+    // Data handling
+  })
+  .catch(error => {
+    // Error handling
+  });
