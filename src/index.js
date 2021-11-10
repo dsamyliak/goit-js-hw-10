@@ -15,11 +15,16 @@ const DEBOUNCE_DELAY = 300;
 const debounce_consoleInfo = debounce(
 
   function consoleInfo(a) {
+    
+    Notiflix.Notify.success("response ok");
     console.log("debounce_fun number", a, "after 1000ms or 1s");
+    
+
   }, 1000, { 'leading': false, 'trailing': true, }
 
 );
 debounce_consoleInfo(5);
+setTimeout(Notiflix.Notify.warning("error"), 2000);
 
 // const debounce_deb = debounce(
 
@@ -156,6 +161,9 @@ function photosAfterParagraph (photos) {
       
       // console.log(photoList[key]);
       // console.log(photos[key].title);
+        Notiflix.Notify.success("response ok");
     }
     }, 500);
+  
+  
   };
