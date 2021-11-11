@@ -3,11 +3,10 @@ import './css/styles.css';
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+// lodash.debounce init
 
-// lodash and lodash.debounce init
-
-const _ = require('lodash');
 const debounce = require('lodash.debounce');
+
 //
 const DEBOUNCE_DELAY = 300;
 
@@ -17,76 +16,15 @@ const debounce_consoleInfo = debounce(
   function consoleInfo(a) {
     
     Notiflix.Notify.success("response ok");
+    // setTimeout(Notiflix.Notify.warning("error"), 2000);
     console.log("debounce_fun number", a, "after 1000ms or 1s");
     
-
-  }, 1000, { 'leading': false, 'trailing': true, }
+  }, DEBOUNCE_DELAY, { 'leading': false, 'trailing': true, }
 
 );
+
 debounce_consoleInfo(5);
-setTimeout(Notiflix.Notify.warning("error"), 2000);
 
-// const debounce_deb = debounce(
-
-//     function deb() {
-//         console.log('Function debounced after 3000ms!');
-//     }, 3000, { 'leading': false, 'trailing': true, }
-
-// );
-// debounce_deb();
-
-// debounce
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-// fetch().then().then().catch();
-
-// function fetchExample() {
-//   return fetch("https://jsonplaceholder.typicode.com/photos")
-//   .then(response => {
-//     // Response handling
-//     if (!response.ok) {
-//       throw new Error(response.status);
-//     }
-//       console.log("response ok");
-//       Notiflix.Notify.success("response ok");
-//       return response.json();
-
-//   })
-//   .then((photos) => {
-//     // Data handling
-//       console.log(photos);
-//       Notiflix.Notify.info("data");
-//   })
-//   .catch(error => {
-//     // Error handling
-//       console.log("error");
-//       Notiflix.Notify.warning("error");
-//   });
-// };
-
-// fetchExample();
-
-///////////////////////////////////////////////////////////////////////////
-
-//
-// // Using _.debounce() method
-// // with its parameters
-// const debounce_fun_loop = _.debounce(function() {
-//   console.log('Function debounced after 1000ms!XXX');
-//   }, 1000, {'leading': false});
-
-// // Defining loop
-// const loop = function() {
-//     setTimeout(loop, 3)
-//     debounce_fun_loop();
-// };
-
-// // Calling loop to start
-// loop();
-
-
-//Example
 
 const fetchUsersBtn = document.querySelector(".btn");
 const userList = document.querySelector(".user-list");
