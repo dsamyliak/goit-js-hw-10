@@ -3,72 +3,57 @@ import './css/styles.css';
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-// lodash.debounce init
+import { nameCountry } from "./js/components/fetchCountries.js";
+import { debounce } from 'lodash';
+export { };
 
-const debounce = require('lodash.debounce');
-
-//
 const DEBOUNCE_DELAY = 300;
+console.log(nameCountry);
 
-// debounce
-const debounce_consoleInfo = debounce(
-
-  function consoleInfo(a) {
-    
-    Notiflix.Notify.success("response ok");
-    // setTimeout(Notiflix.Notify.warning("error"), 2000);
-    console.log("debounce_fun number", a, "after 1000ms or 1s");
-    
-  }, DEBOUNCE_DELAY, { 'leading': false, 'trailing': true, }
-
-);
-
-debounce_consoleInfo(5);
+const refs = {
+  searchBox: document.querySelector("input#search-box"),
+  sameWordList: document.querySelector(".country-list"),
+  countryInfo: document.querySelector(".country-info"),
+};
 
 
-const fetchUsersBtn = document.querySelector(".btn");
-const userList = document.querySelector(".user-list");
+refs.searchBox.addEventListener("input",
+  debounce(onSearch, DEBOUNCE_DELAY, { leading: false, trailing: true }));
 
-fetchUsersBtn.addEventListener("click", () => {
+function onSearch(e) {
+  e.preventDefault();
+  const searchQuery = e.currentTarget.elements.query.value;
+  console.log(searchQuery);
+  
+  console.log(refs.searchBox.value);
+  // console.log(e.value);
+  // parameters to fetch
+  const searchOptions = {
+    name: refs.searchBox.value
+  };
+  
+  };
 
-  fetchUsers()
-    .then((users) => renderUserList(users))
+  fetchCountry()
+    .then((searchOptions) => renderCountryInfo(searchOptions))
     .catch((error) => console.log(error));
   
-  fetchPhotos()
-      .then((photos) => photosAfterParagraph(photos))
-      .catch((error) => console.log(error))
-    ;
-
-});
-
-function fetchUsers() {
-  return fetch("https://jsonplaceholder.typicode.com/users")
+function fetchCountry() {
+  return fetch(`https://restcountries.com/v3.1/all?fields=name.official,capital,population,flags.svg,languages`)
     .then((response) => {
       if (!response.ok) {
+        Notiflix.Notify.warning("Oops, there is no country with that name");
         throw new Error(response.status);
       }
+      Notiflix.Notify.success("response ok");
       return response.json();
     }
     );
 }
 
-// to fetchPhotos
-const searchParams = new URLSearchParams({
-  _limit: 10,
-  _sort: "id",
-});
 
-function fetchPhotos() {
-  return fetch(`https://jsonplaceholder.typicode.com/photos?${searchParams}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
-    }
-    );
-}
+function renderCountryInfo() { };
+
 
 
 function renderUserList(users) {
@@ -86,7 +71,7 @@ function renderUserList(users) {
     .join("");
 
   userList.innerHTML = markup;
-}
+};
 
 function photosAfterParagraph (photos) {
     setTimeout(() => {
@@ -104,4 +89,5 @@ function photosAfterParagraph (photos) {
     }, 500);
   
   
-  };
+};
+  
