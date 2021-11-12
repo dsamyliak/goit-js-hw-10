@@ -1,60 +1,58 @@
 import './css/styles.css';
-
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { nameCountry } from "./js/components/fetchCountries.js";
+import RestCountriesAPI from "./js/components/fetchCountries";
 import { debounce } from 'lodash';
-export { };
-
+export { name };
+  
 const DEBOUNCE_DELAY = 300;
-console.log(nameCountry);
-
 const refs = {
   searchBox: document.querySelector("input#search-box"),
   sameWordList: document.querySelector(".country-list"),
   countryInfo: document.querySelector(".country-info"),
 };
 
+let name = '';
+const restCountriesAPI = new RestCountriesAPI();
+
 
 refs.searchBox.addEventListener("input",
-  debounce(onSearch, DEBOUNCE_DELAY, { leading: false, trailing: true }));
+  debounce(onSearch, DEBOUNCE_DELAY, { trailing: true }));
+
 
 function onSearch(e) {
   e.preventDefault();
-  const searchQuery = e.currentTarget.elements.query.value;
-  console.log(searchQuery);
+   
+  name = e.path[0].value.trim();
+  console.log(name);
+
+  restCountriesAPI.name = name;
+  restCountriesAPI.fetchCountries(name).then(countryGetInfo => {
+    renderCountryInfo(countryGetInfo)
+  // console.log(countryGetInfo)
+});
+
+  console.log(restCountriesAPI);
   
-  console.log(refs.searchBox.value);
-  // console.log(e.value);
-  // parameters to fetch
-  const searchOptions = {
-    name: refs.searchBox.value
+  function renderCountryInfo(countryGetInfo) {
+    const { name, capital, population, flags, languages } = countryGetInfo;
+ 
+    
+      console.log(flags.svg);
+      console.log(name.official);
+      console.log(capital[0]);
+      console.log(population);
+      for (const element of Object.values(languages)) { console.log(element);};
+    
+
   };
-  
-  };
-
-  fetchCountry()
-    .then((searchOptions) => renderCountryInfo(searchOptions))
-    .catch((error) => console.log(error));
-  
-function fetchCountry() {
-  return fetch(`https://restcountries.com/v3.1/all?fields=name.official,capital,population,flags.svg,languages`)
-    .then((response) => {
-      if (!response.ok) {
-        Notiflix.Notify.warning("Oops, there is no country with that name");
-        throw new Error(response.status);
-      }
-      Notiflix.Notify.success("response ok");
-      return response.json();
-    }
-    );
-}
+  ///////////////////////////////
+};
 
 
-function renderCountryInfo() { };
 
-
+ 
 
 function renderUserList(users) {
 
