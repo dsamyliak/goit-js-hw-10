@@ -14,7 +14,7 @@ export default class RestCountriesAPI {
     return fetch(`https://restcountries.com/v3.1/name/${this.searchName}?fields=name,capital,population,flags,languages`)
             .then((response) => {
                 if (!response.ok) {
-                    Notiflix.Notify.warning("Oops, there is no country with that name");
+                    Notiflix.Notify.failure("Oops, there is no country with that name");
                     throw new Error(response.status);
                 }
                 Notiflix.Notify.success("response ok");
@@ -23,9 +23,11 @@ export default class RestCountriesAPI {
             })
             .then(data => {
                 console.log(data);
-                
+                if (data.length > 10) {
+                    Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+                }
                 this.page += 1;
-                this.countryGetInfo = data[0];
+                this.countryGetInfo = data;
                 return this.countryGetInfo;
             });
     
