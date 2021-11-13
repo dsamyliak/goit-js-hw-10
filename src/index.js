@@ -114,7 +114,7 @@ function renderCountryInfo(countryGetInfo) {
   
 };
 
-// add many counties to list 
+// add many countries to list 
 function AddCountryList(countryGetInfo) {
 
   
