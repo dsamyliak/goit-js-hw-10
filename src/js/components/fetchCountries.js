@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { refs } from '../../index';
 
 export default class RestCountriesAPI {
     constructor(){
@@ -15,9 +16,12 @@ export default class RestCountriesAPI {
             .then((response) => {
                 if (!response.ok) {
                     Notiflix.Notify.failure("Oops, there is no country with that name");
+                    refs.countryInfo.innerHTML = '';
+                    refs.countryList.innerHTML = '';
                     throw new Error(response.status);
+                    
                 }
-                Notiflix.Notify.success("response ok");
+                // Notiflix.Notify.success("response ok");
                 return response.json();
           
             })
